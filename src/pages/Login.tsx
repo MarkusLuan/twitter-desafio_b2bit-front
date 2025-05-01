@@ -17,8 +17,8 @@ export function Login() {
     setIsCarregando(true);
 
     let res = api.autenticar(usuario, senha);
-    res.then((r) => {
-        setErro(r.texto);
+    res.then(r => {
+        console.log(r);
     }).catch(r => {
         setErro("Erro no login");
 

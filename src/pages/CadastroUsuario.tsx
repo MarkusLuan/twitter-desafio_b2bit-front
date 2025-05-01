@@ -26,8 +26,6 @@ export function CadastroUsuario() {
         navigate("/login");
     }).catch(r => {
         setErro(r.response.data.texto);
-
-        console.log(r)
     }).finally(() => {
         setIsCarregando(false);
     });
