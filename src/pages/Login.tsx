@@ -29,6 +29,8 @@ export function Login() {
             j["created_at"],
             j["expires_in"],
         ));
+
+        navigate("/");
     }).catch(r => {
         setErro(r.response.data.texto);
     }).finally(() => {

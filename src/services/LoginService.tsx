@@ -9,7 +9,7 @@ export class LoginService {
     }
     
     public get isLogado () {
-        return !!localStorage.getItem("token") || !!this.userToken || this.userToken!.isExpirado();
+        return !!localStorage.getItem("token") || (this.userToken != null && this.userToken!.isExpirado());
     }
     
     public get userToken() : UserToken|null {
