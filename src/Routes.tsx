@@ -7,8 +7,8 @@ export function AppRoutes () {
     return (
         <BrowserRouter>
             <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/cadastrar" element={<CadastroUsuario />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cadastrar" element={<CadastroUsuario />} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { ApiService } from "../services/ApiService";
 import { useNavigate } from "react-router-dom";
+import { ApiService } from "../services/ApiService";
+import { LoginService  } from "../services/LoginService";
+import { UserToken  } from "../models/UserToken";
 import '../App.css'
 
 export function Login() {
@@ -10,6 +12,7 @@ export function Login() {
   const [erro, setErro] = useState('');
 
   const api = new ApiService();
+  const loginService = new LoginService();
   const navigate = useNavigate();
 
   const fazer_login = async (e: React.FormEvent) => {
@@ -18,11 +21,16 @@ export function Login() {
 
     let res = api.autenticar(usuario, senha);
     res.then(r => {
-        console.log(r);
-    }).catch(r => {
-        setErro("Erro no login");
+        const j = r.data;
 
-        console.log(r)
+        loginService.salvarToken(new UserToken(
+            j["access_token"],
+            j["refresh_token"],
+            j["created_at"],
+            j["expires_in"],
+        ));
+    }).catch(r => {
+        setErro(r.response.data.texto);
     }).finally(() => {
         setIsCarregando(false);
     });
