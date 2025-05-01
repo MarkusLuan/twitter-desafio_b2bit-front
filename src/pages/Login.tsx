@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ApiService } from "../services/ApiService";
+import { useNavigate } from "react-router-dom";
 import '../App.css'
 
 export function Login() {
@@ -9,6 +10,7 @@ export function Login() {
   const [erro, setErro] = useState('');
 
   const api = new ApiService();
+  const navigate = useNavigate();
 
   const fazer_login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +30,10 @@ export function Login() {
 
   return (
     <form id="form_login" method="post" action="#" onSubmit={fazer_login} className="bg-white p-8 rounded shadow-md" >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="mb-4">Login</h2>
 
         <div className="form-group col">
-            <label for="inpt_user" className="form-label" >Login</label>
+            <label htmlFor="inpt_user" className="form-label" >Login ou e-mail</label>
             <input
                 id="inpt_user"
                 type="text"
@@ -59,15 +61,16 @@ export function Login() {
         <div className='d-flex'>
             <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 m-auto"
+                className="w-full text-white p-2 rounded hover:bg-blue-600 m-auto"
                 disabled={isCarregando}
             >
                 Entrar
             </button>
 
             <button
-                type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 m-auto"
+                type="button"
+                className="w-full text-white p-2 rounded hover:bg-blue-600 m-auto"
+                onClick={() => navigate('/cadastrar')}
                 disabled={isCarregando}
             >
                 Cadastrar
