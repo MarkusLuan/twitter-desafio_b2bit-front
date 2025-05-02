@@ -1,4 +1,6 @@
-import viteLogo from '/vite.svg'
+import reactLogo from '../assets/react.svg';
+
+import "./UserComponent.css";
 
 interface Props {
     nick: string
@@ -6,9 +8,9 @@ interface Props {
 
 export function UserComponent ({ nick } : Props) {
     return (
-        <div className="UserInfo" style={{textAlign: "left"}}>
-            <img src={viteLogo} />
-            <span className="UserInfoNick">{ nick }</span>
+        <div className="user-info" style={{textAlign: "left"}}>
+            <img src={reactLogo} />
+            <span className="user-info-nick">{ nick }</span>
         </div>
     );
 }
