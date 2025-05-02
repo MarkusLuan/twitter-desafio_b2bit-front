@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ApiService } from "../services/ApiService";
 import { LoginService  } from "../services/LoginService";
 import { UserToken  } from "../models/UserToken";
+
+import { ErroComponent } from "../componentes/ErroComponent";
+import { LoadingComponent } from "../componentes/LoadingComponent";
 import '../App.css'
 
 export function Login() {
@@ -86,13 +89,10 @@ export function Login() {
                 Cadastrar
             </button>
 
-            { isCarregando &&
-                <div className="spinner-border text-primary mt-auto mb-auto" role="status">
-                    <span className="visually-hidden">Carregando...</span>
-                </div>
-            }
+            <LoadingComponent isCarregando={isCarregando} className='mt-auto mb-auto' />
         </div>
-        {erro && <p className="mt-4 text-danger">{erro}</p>}
+        
+        <ErroComponent erro={erro} />
     </form>
   );
 }
