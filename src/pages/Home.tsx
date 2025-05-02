@@ -28,7 +28,7 @@ export function Home() {
             for (let r of res) {
                 const feed = new Feed(
                     r["uuid"],
-                    r["dt_criacao"],
+                    new Date(r["dt_criacao"]),
                     r["created_by"],
                     r["texto"],
                     r["count_likes"],

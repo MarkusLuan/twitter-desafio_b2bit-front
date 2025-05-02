@@ -35,6 +35,16 @@
     padding: 0 10px 10px;
 }
 
+.feed-info .feed-datetime {
+    display: grid;
+    margin: auto;
+    margin-right: 10px;
+    text-align: right;
+    font-style: italic;
+    font-size: 9pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .feed-info .feed-description {
     text-align: justify;
     margin-top: 10px;

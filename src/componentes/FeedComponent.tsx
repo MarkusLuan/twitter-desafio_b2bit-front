@@ -35,7 +35,13 @@ export function FeedComponent ({ feed }: Props) {
         }
     }
 
-    const dtFormatada = feed.dtCriacao;
+    console.log(feed.dtCriacao);
+
+    const dtFormatada = feed.dtCriacao.toLocaleDateString("pt-BR");
+    const horaFormatada = feed.dtCriacao.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
 
     return (
         <div>
@@ -51,7 +57,13 @@ export function FeedComponent ({ feed }: Props) {
                     <strong>{countLikes} curtidas</strong>
                 </div>
                 <div className="feed-info">
-                    <UserComponent nick={feed.createdBy} />
+                    <div className="d-flex">
+                        <UserComponent nick={feed.createdBy} />
+                        <div className="feed-datetime" >
+                            <span>{dtFormatada}</span>
+                            <span>{horaFormatada}</span>
+                        </div>
+                    </div>
                     <p className="feed-description">{feed.texto}</p>
                 </div>
             </div>
