@@ -16,12 +16,23 @@ export function FeedComponent ({ feed }: Props) {
     const [ countLikes, setCountLikes ] = useState(feed.countLikes);
     const [ isLiked, setisLiked ] = useState(feed.isLiked);
 
-    const curtirFeed = () => {
-        const res = apiService.curtirFeed(loginService.userToken!, feed.uuid);
-        res.then(r => {
-            setCountLikes (countLikes+1);
-            setisLiked (!isLiked);
-        }).catch(r => {});
+    const toggleCurtirFeed = () => {
+        const updateCurtidas = (curtiu: boolean) => {
+            setCountLikes (countLikes + (curtiu? 1 : -1));
+            setisLiked (curtiu);
+        }
+
+        if (isLiked) {
+            const res = apiService.descurtirFeed(loginService.userToken!, feed.uuid);
+            res.then(r => updateCurtidas(false))
+               .catch(r => {
+                    if (r.status == 404) updateCurtidas(false);
+                }
+            );
+        } else {
+            const res = apiService.curtirFeed(loginService.userToken!, feed.uuid);
+            res.then(r => updateCurtidas(true));
+        }
     }
 
     return (
@@ -34,7 +45,7 @@ export function FeedComponent ({ feed }: Props) {
                     <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
                 </div>
                 <div className="post-acoes">
-                    <span onClick={curtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
+                    <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
                     <strong>{countLikes} curtidas</strong>
                 </div>
                 <div className="post-info">

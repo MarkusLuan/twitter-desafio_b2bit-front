@@ -72,4 +72,12 @@ export class ApiService {
             }
         });
     }
+
+    async descurtirFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.delete(`/likes/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
 };
