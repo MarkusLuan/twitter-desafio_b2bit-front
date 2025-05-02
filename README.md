@@ -16,3 +16,10 @@ O projeto se trata de uma API RESTFUL para um sistema de midia social, onde os u
 - [ ] Seguir e Deixar de Seguir Outros Usuários
 - [x] Visualizar o Feed
 - [ ] Mostrar apenas postagens dos usuários seguidos
+
+### Backend
+* Feito com Python 3.13
+* Usando o Flask e FlaskRestFul como Framework
+* Banco de dados: Postgres e para testes o Sqlite
+* Com CI de testes e de releases
+* Link no [github](https://github.com/MarkusLuan/twitter-desafio_b2bit)
