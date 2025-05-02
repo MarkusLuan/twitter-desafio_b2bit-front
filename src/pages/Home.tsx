@@ -14,7 +14,7 @@ export function Home() {
     const loginService = new LoginService();
 
     const postar = () => {
-        navigate("/post/create");
+        navigate("/feed/create");
     };
 
     const updateFeed = () => {
