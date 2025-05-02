@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
+import { UserToken } from "../models/UserToken";
+
 export class ApiService {
     private BASIC_AUTH;
     private request: AxiosInstance;
@@ -41,6 +43,16 @@ export class ApiService {
         }, {
             headers: {
                 Authorization: `Basic ${this.BASIC_AUTH}`
+            }
+        });
+    }
+
+    async postarFeed(userToken: UserToken, feedTexto: string) {
+        return await this.request.post("/feed/", {
+            "texto": feedTexto,
+        }, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
             }
         });
     }

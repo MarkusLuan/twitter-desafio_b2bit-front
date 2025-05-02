@@ -3,6 +3,8 @@ import { JSX } from "react";
 
 import { LoginService } from "./services/LoginService";
 
+import { CreatePost } from './pages/CreatePost';
+import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { CadastroUsuario } from './pages/CadastroUsuario';
 
@@ -18,9 +20,17 @@ export function AppRoutes () {
             <Routes>
                 <Route path="/" element={
                     <PrivateRoute >
-                        <div>Tteste de login</div>
+                        <Home />
                     </PrivateRoute>
                 } />
+
+                <Route path="/post/create" element={
+                    <PrivateRoute >
+                        <CreatePost />
+                    </PrivateRoute>
+                } />
+
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastrar" element={<CadastroUsuario />} />
             </Routes>
