@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 
 import { CreatePost } from '../pages/CreatePost';
 

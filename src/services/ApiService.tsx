@@ -65,6 +65,14 @@ export class ApiService {
         });
     }
 
+    async deletarFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.delete(`/feed/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async curtirFeed(userToken: UserToken, uuid_feed: string) {
         return await this.request.post(`/likes/${uuid_feed}`, {}, {
             headers: {
@@ -79,5 +87,9 @@ export class ApiService {
                 Authorization: `Bearer ${userToken.token}`
             }
         });
+    }
+
+    async unfollow(arg0: UserToken, createdBy: string) {
+        throw new Error("Method not implemented.");
     }
 };

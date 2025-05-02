@@ -15,7 +15,8 @@ interface Props {
 
 export function FeedComponent ({ feed }: Props) {
     const [ countLikes, setCountLikes ] = useState(feed.countLikes);
-    const [ isLiked, setisLiked ] = useState(feed.isLiked);
+    const [ isLiked, setIsLiked ] = useState(feed.isLiked);
+    const [ isDeletado, setIsDeletado ] = useState(false);
     
     const apiService = new ApiService();
     const loginService = new LoginService();
@@ -24,7 +25,7 @@ export function FeedComponent ({ feed }: Props) {
     const toggleCurtirFeed = () => {
         const updateCurtidas = (curtiu: boolean) => {
             setCountLikes (countLikes + (curtiu? 1 : -1));
-            setisLiked (curtiu);
+            setIsLiked (curtiu);
         }
 
         if (isLiked) {
@@ -60,7 +61,9 @@ export function FeedComponent ({ feed }: Props) {
             {
                 menu: "Deletar",
                 onClick: () => {
-                    
+                    // TODO: Mostrar popup para confirmar
+                    const res = apiService.deletarFeed(loginService.userToken!, feed.uuid);
+                    res.then(r => { setIsDeletado(true) });
                 }
             }
         ];
@@ -69,37 +72,41 @@ export function FeedComponent ({ feed }: Props) {
             {
                 menu: "Deixar de Seguir",
                 onClick: () => {
-                    
+                    apiService.unfollow(loginService.userToken!, feed.createdBy);
                 }
             }
         ]
     }
 
     return (
-        <div>
-            <div className="feed">
-                <div className="d-flex feed-header">
-                    <UserComponent nick={feed.createdBy} />
-                    <OpcoesComponent icon={iconOpcoes} menu={menu} />
-                </div>
-                <div className="feed-imagem">
-                    <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
-                </div>
-                <div className="feed-acoes">
-                    <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
-                    <strong>{countLikes} curtidas</strong>
-                </div>
-                <div className="feed-info">
-                    <div className="d-flex">
-                        <UserComponent nick={feed.createdBy} />
-                        <div className="feed-datetime" >
-                            <span>{dtFormatada}</span>
-                            <span>{horaFormatada}</span>
+        <>
+            { !isDeletado &&
+                <div>
+                    <div className="feed">
+                        <div className="d-flex feed-header">
+                            <UserComponent nick={feed.createdBy} />
+                            <OpcoesComponent icon={iconOpcoes} menu={menu} />
+                        </div>
+                        <div className="feed-imagem">
+                            <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
+                        </div>
+                        <div className="feed-acoes">
+                            <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
+                            <strong>{countLikes} curtidas</strong>
+                        </div>
+                        <div className="feed-info">
+                            <div className="d-flex">
+                                <UserComponent nick={feed.createdBy} />
+                                <div className="feed-datetime" >
+                                    <span>{dtFormatada}</span>
+                                    <span>{horaFormatada}</span>
+                                </div>
+                            </div>
+                            <p className="feed-description">{feed.texto}</p>
                         </div>
                     </div>
-                    <p className="feed-description">{feed.texto}</p>
                 </div>
-            </div>
-        </div>
+            }
+        </>
     );
 }
