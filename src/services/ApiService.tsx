@@ -55,8 +55,26 @@ export class ApiService {
         });
     }
 
+    async getFeedInfo(userToken: UserToken, uuid_feed: string) {
+        return await this.request.get(`/feed/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async postarFeed(userToken: UserToken, feedTexto: string) {
         return await this.request.post("/feed/", {
+            "texto": feedTexto,
+        }, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async editarFeed(userToken: UserToken, uuid_feed: string, feedTexto: string) {
+        return await this.request.put(`/feed/${uuid_feed}`, {
             "texto": feedTexto,
         }, {
             headers: {

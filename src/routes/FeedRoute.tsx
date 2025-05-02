@@ -5,5 +5,5 @@ import { CreatePost } from '../pages/CreatePost';
 export const FeedRoute  = [
     <Route path="" element={<Navigate to="/" />} />,
     <Route path="create" element={<CreatePost />} />,
-    <Route path="edit/:uuid" element={<CreatePost />} />
+    <Route path="edit/:uuid_feed" element={<CreatePost />} />
 ];
