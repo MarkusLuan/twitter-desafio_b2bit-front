@@ -1,4 +1,4 @@
-.post {
+.feed {
     width: 400px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -7,7 +7,7 @@
     background-color: #fff;
 }
   
-.post-header {
+.feed-header {
     padding: 10px;
     font-weight: bold;
     border-bottom: 1px solid #eee;
@@ -15,29 +15,30 @@
     color: #FFF;
 }
   
-.post-imagem img {
+.feed-imagem img {
     width: 100%;
     display: block;
 }
 
-.post-acoes {
+.feed-acoes {
     display: flex;
     gap: 5px;
     padding: 8px 10px;
     font-size: 1.2rem;
 }
 
-.post-acoes > span {
+.feed-acoes > span {
     cursor: pointer;
 }
   
-.post-info {
+.feed-info {
     padding: 0 10px 10px;
 }
 
-.post-info .post-description {
+.feed-info .feed-description {
     text-align: justify;
     margin-top: 10px;
     margin-left: 30px;
     overflow-wrap: break-word;
+    white-space: pre-line; 
 }

@@ -35,22 +35,24 @@ export function FeedComponent ({ feed }: Props) {
         }
     }
 
+    const dtFormatada = feed.dtCriacao;
+
     return (
         <div>
-            <div className="post">
-                <div className="post-header">
+            <div className="feed">
+                <div className="feed-header">
                     <UserComponent nick={feed.createdBy} />
                 </div>
-                <div className="post-imagem">
+                <div className="feed-imagem">
                     <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
                 </div>
-                <div className="post-acoes">
+                <div className="feed-acoes">
                     <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
                     <strong>{countLikes} curtidas</strong>
                 </div>
-                <div className="post-info">
+                <div className="feed-info">
                     <UserComponent nick={feed.createdBy} />
-                    <p className="post-description">{feed.texto}</p>
+                    <p className="feed-description">{feed.texto}</p>
                 </div>
             </div>
         </div>
