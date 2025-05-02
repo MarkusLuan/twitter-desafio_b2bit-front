@@ -14,11 +14,13 @@ export function FeedComponent ({ feed }: Props) {
     const loginService = new LoginService();
 
     const [ countLikes, setCountLikes ] = useState(feed.countLikes);
+    const [ isLiked, setisLiked ] = useState(feed.isLiked);
 
     const curtirFeed = () => {
         const res = apiService.curtirFeed(loginService.userToken!, feed.uuid);
         res.then(r => {
             setCountLikes (countLikes+1);
+            setisLiked (!isLiked);
         }).catch(r => {});
     }
 
@@ -32,7 +34,7 @@ export function FeedComponent ({ feed }: Props) {
                     <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
                 </div>
                 <div className="post-acoes">
-                    <span onClick={curtirFeed}>❤️</span>
+                    <span onClick={curtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
                     <strong>{countLikes} curtidas</strong>
                 </div>
                 <div className="post-info">

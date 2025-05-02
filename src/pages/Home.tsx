@@ -31,7 +31,8 @@ export function Home() {
                     r["dt_criacao"],
                     r["created_by"],
                     r["texto"],
-                    r["count_likes"]
+                    r["count_likes"],
+                    r["is_liked"]
                 );
 
                 feeds.push(feed);
