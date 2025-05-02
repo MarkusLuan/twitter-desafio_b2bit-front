@@ -64,4 +64,12 @@ export class ApiService {
             }
         });
     }
+
+    async curtirFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.post(`/likes/${uuid_feed}`, {}, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
 };
