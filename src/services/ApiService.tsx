@@ -47,6 +47,14 @@ export class ApiService {
         });
     }
 
+    async getFeed(userToken: UserToken) {
+        return await this.request.get("/feed/", {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async postarFeed(userToken: UserToken, feedTexto: string) {
         return await this.request.post("/feed/", {
             "texto": feedTexto,
