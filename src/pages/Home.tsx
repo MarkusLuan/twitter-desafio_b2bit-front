@@ -1,16 +1,9 @@
-import { ReactEventHandler, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
-import { ApiService } from "../services/ApiService";
-import { LoginService  } from "../services/LoginService";
-
-import { FeedComponent } from "../componentes/FeedComponent";
-import { LoadingComponent } from "../componentes/LoadingComponent";
-
-import { Feed  } from "../models/Feed";
-
-import "./Home.css";
-import '../App.css'
+import { Feed } from "../models";
+import { ApiService, LoginService } from "../services";
+import { FeedComponent, LoadingComponent } from "../componentes";
 
 export function Home() {
     const [ feeds, setFeed ] = useState<Feed[]>([]);
@@ -46,7 +39,6 @@ export function Home() {
             
             setFeed(feeds);
         }).catch(r => {
-
         }).finally(() => {
             setIsCarregando(false);
         });
@@ -55,6 +47,15 @@ export function Home() {
     useEffect(() => {
         updateFeed();
     }, []);
+
+    useEffect(() => {
+        document.body.style.backgroundColor = "#3A3A3A";
+    
+        return () => {
+          // Limpa quando sair da página
+          document.body.style.backgroundColor = "";
+        };
+      }, []);
 
     return (
         <div >

@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { ApiService } from "../services/ApiService";
 import { useNavigate } from "react-router-dom";
-import '../App.css'
+import { useState } from 'react'
+
+import { ApiService } from "../services/ApiService";
 
 export function CadastroUsuario() {
   const [nome, setNome] = useState('');

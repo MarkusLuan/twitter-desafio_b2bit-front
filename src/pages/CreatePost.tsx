@@ -1,12 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { ApiService } from "../services/ApiService";
-import { LoginService  } from "../services/LoginService";
-import { UserToken  } from "../models/UserToken";
 
-import { ErroComponent } from "../componentes/ErroComponent";
-import { LoadingComponent } from "../componentes/LoadingComponent";
-import '../App.css'
+import { ApiService, LoginService } from "../services";
+import { ErroComponent, LoadingComponent } from "../componentes";
 
 export function CreatePost() {
     const [ feedTexto, setFeedTexto ] = useState('');
