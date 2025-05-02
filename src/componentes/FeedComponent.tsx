@@ -1,20 +1,25 @@
+import { useState } from "react";
+
 import { Feed } from "../models/Feed";
 import { ApiService, LoginService } from "../services";
 import { UserComponent } from "./UserComponent";
+import { OpcoesComponent } from "./OpcoesComponent";
 
+import iconOpcoes from "../assets/iconOpcoes.png";
 import "./FeedComponent.css";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     feed: Feed
 }
 
 export function FeedComponent ({ feed }: Props) {
-    const apiService = new ApiService();
-    const loginService = new LoginService();
-
     const [ countLikes, setCountLikes ] = useState(feed.countLikes);
     const [ isLiked, setisLiked ] = useState(feed.isLiked);
+    
+    const apiService = new ApiService();
+    const loginService = new LoginService();
+    const navigate = useNavigate();
 
     const toggleCurtirFeed = () => {
         const updateCurtidas = (curtiu: boolean) => {
@@ -35,19 +40,47 @@ export function FeedComponent ({ feed }: Props) {
         }
     }
 
-    console.log(feed.dtCriacao);
-
     const dtFormatada = feed.dtCriacao.toLocaleDateString("pt-BR");
     const horaFormatada = feed.dtCriacao.toLocaleTimeString("pt-BR", {
         hour: "2-digit",
         minute: "2-digit"
     });
 
+    // TODO: implementar função para validar se é o mesmo usuário logado
+    let menu = [];
+    let isFeedOwner = true;
+    if (isFeedOwner) {
+        menu = [
+            {
+                menu: "Editar",
+                onClick: () => {
+                    navigate(`/feed/edit/${feed.uuid}`);
+                }
+            },
+            {
+                menu: "Deletar",
+                onClick: () => {
+                    
+                }
+            }
+        ];
+    } else {
+        menu = [
+            {
+                menu: "Deixar de Seguir",
+                onClick: () => {
+                    
+                }
+            }
+        ]
+    }
+
     return (
         <div>
             <div className="feed">
-                <div className="feed-header">
+                <div className="d-flex feed-header">
                     <UserComponent nick={feed.createdBy} />
+                    <OpcoesComponent icon={iconOpcoes} menu={menu} />
                 </div>
                 <div className="feed-imagem">
                     <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />

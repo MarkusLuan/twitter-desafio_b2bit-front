@@ -14,6 +14,11 @@
     background: #2800659f;
     color: #FFF;
 }
+
+.feed-header .component-opcoes {
+    margin: auto;
+    margin-right: 5px;
+}
   
 .feed-imagem img {
     width: 100%;
