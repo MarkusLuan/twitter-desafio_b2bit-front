@@ -12,7 +12,7 @@
     text-align: justify;
 }
 
-.component-search-results * {
+.component-search-itemResult {
     padding: 15px;
     margin: 5px;
     border-radius: 15px;
@@ -21,6 +21,6 @@
     cursor: pointer;
 }
 
-.component-search-results *:hover {
+.component-search-itemResult:hover {
     background: #2a0f64;
 }

@@ -55,6 +55,14 @@ export class ApiService {
         });
     }
 
+    async searchUser(userToken: UserToken, search: string) {
+        return await this.request.get(`/users/?search=${search}&max_results=5`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async getFeed(userToken: UserToken) {
         return await this.request.get("/feed/", {
             headers: {

@@ -1,14 +1,27 @@
 import { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom";
+
+import { UserComponent } from "../componentes";
+import { ApiService, LoginService } from "../services";
 
 import './SearchComponent.css';
 
+interface UserDTO {
+    nick: string,
+    nome: string
+}
+
 export function SearchComponent () {
     const [ search, setSearch ] = useState('');
-    const [ results, setResults ] = useState([134, 321321, 132121]);
+    const [ results, setResults ] = useState<UserDTO[]>([]);
     const [ position, setPosition ] = useState( {top: 0, left: 0, width: 0} );
     const [ isShowResults, setIsShowResults ] = useState(false);
     
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+    const navigate = useNavigate();
+    const apiService = new ApiService();
+    const loginService = new LoginService();
 
     const updatePosition = (e) => {
         const rect = e.target.getBoundingClientRect();
@@ -17,13 +30,24 @@ export function SearchComponent () {
             left: rect.left,
             width: rect.width,
         });
-
-        console.log(position);
     };
 
-    const pesquisar = () => {
-        setResults([Math.random() * 200]);
-        setIsShowResults(true);
+    const pesquisar = (search) => {
+        const res = apiService.searchUser(loginService.userToken!, search);
+        res.then(r => {
+            const res = r.data;
+            const usuarios = [];
+
+            for (let r of res) {
+                usuarios.push({
+                    nick: r.nick,
+                    nome: r.nome,
+                })
+            }
+            
+            setResults(usuarios);
+            setIsShowResults(true);
+        });
     }
 
     const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +59,7 @@ export function SearchComponent () {
         }
 
         debounceRef.current = setTimeout(() => {
-            if (value.trim().length > 0) pesquisar();
+            if (value.trim().length > 0) pesquisar(value);
             else {
                 setResults([]);
                 setIsShowResults(false);
@@ -53,14 +77,13 @@ export function SearchComponent () {
         }
     };
 
-    const onResultSelect = (res: any) => {
+    const onResultSelect = (res: UserDTO) => {
         if (debounceRef.current) {
             clearTimeout(debounceRef.current);
         }
 
-        console.log(res);
-
         setIsShowResults(false);
+        navigate(`/users/${res.nick}`);
     };
 
     return (
@@ -84,8 +107,12 @@ export function SearchComponent () {
                     {results.map((res, idx) => (
                         <div
                             key={idx}
+                            className="component-search-itemResult"
                             onClick={() => onResultSelect(res)}
-                        >{res}</div>
+                        >
+                            <UserComponent nick={res.nick} />
+                            <span>{res.nome}</span>
+                        </div>
                     ))}
                 </div>
             }
