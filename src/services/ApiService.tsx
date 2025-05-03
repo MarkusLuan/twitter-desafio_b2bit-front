@@ -63,8 +63,8 @@ export class ApiService {
         });
     }
 
-    async getFeedInfo(userToken: UserToken, uuid_feed: string) {
-        return await this.request.get(`/feed/${uuid_feed}`, {
+    async getFeedInfo(userToken: UserToken, uuidFeed: string) {
+        return await this.request.get(`/feed/${uuidFeed}`, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }
@@ -81,8 +81,8 @@ export class ApiService {
         });
     }
 
-    async editarFeed(userToken: UserToken, uuid_feed: string, feedTexto: string) {
-        return await this.request.put(`/feed/${uuid_feed}`, {
+    async editarFeed(userToken: UserToken, uuidFeed: string, feedTexto: string) {
+        return await this.request.put(`/feed/${uuidFeed}`, {
             "texto": feedTexto,
         }, {
             headers: {
@@ -91,31 +91,43 @@ export class ApiService {
         });
     }
 
-    async deletarFeed(userToken: UserToken, uuid_feed: string) {
-        return await this.request.delete(`/feed/${uuid_feed}`, {
+    async deletarFeed(userToken: UserToken, uuidFeed: string) {
+        return await this.request.delete(`/feed/${uuidFeed}`, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }
         });
     }
 
-    async curtirFeed(userToken: UserToken, uuid_feed: string) {
-        return await this.request.post(`/likes/${uuid_feed}`, {}, {
+    async curtirFeed(userToken: UserToken, uuidFeed: string) {
+        return await this.request.post(`/likes/${uuidFeed}`, {}, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }
         });
     }
 
-    async descurtirFeed(userToken: UserToken, uuid_feed: string) {
-        return await this.request.delete(`/likes/${uuid_feed}`, {
+    async descurtirFeed(userToken: UserToken, uuidFeed: string) {
+        return await this.request.delete(`/likes/${uuidFeed}`, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }
         });
     }
 
-    async unfollow(arg0: UserToken, createdBy: string) {
-        throw new Error("Method not implemented.");
+    async follow(userToken: UserToken, uuidUser: string) {
+        return await this.request.post(`/followers/${uuidUser}`, {}, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async unfollow(userToken: UserToken, uuidUser: string) {
+        return await this.request.delete(`/followers/${uuidUser}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
     }
 };

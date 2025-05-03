@@ -69,6 +69,13 @@ export function FeedComponent ({ feed }: Props) {
     } else {
         menu = [
             {
+                // TODO: Remover após os testes
+                menu: "Seguir usuário",
+                onClick: () => {
+                    apiService.follow(loginService.userToken!, feed.createdBy);
+                }
+            },
+            {
                 menu: "Deixar de Seguir",
                 onClick: () => {
                     apiService.unfollow(loginService.userToken!, feed.createdBy);
