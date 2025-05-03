@@ -103,7 +103,8 @@ export function SearchComponent () {
                         top: position.top,
                         left: position.left,
                         width: position.width,
-                }}>
+                    }}
+                >
                     {results.map((res, idx) => (
                         <div
                             key={idx}
