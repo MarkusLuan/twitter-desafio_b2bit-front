@@ -1,5 +1,6 @@
 .user-info {
     cursor: pointer;
+    text-align: "left";
 }
 
 .user-info img {
@@ -16,4 +17,5 @@
 .user-info-nick {
     font-style: italic;
     font-weight: bold;
+    font-size: 16pt;
 }

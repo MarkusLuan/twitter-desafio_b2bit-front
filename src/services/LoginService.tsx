@@ -47,4 +47,8 @@ export class LoginService {
         if (nick) return atob(nick);
         return null;
     }
+
+    public encerrarSessao() {
+        localStorage.clear();
+    }
 }
