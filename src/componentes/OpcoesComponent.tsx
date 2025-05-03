@@ -21,7 +21,7 @@ export function OpcoesComponent ( { icon, menu }: Props) {
             }}>
                 {menu.map((itemMenu, idx) => {
                     return (
-                        <span
+                        <span key={idx}
                             className="component-opcoes-item"
                             onClick={ () => itemMenu.onClick() }
                         >{itemMenu.menu}</span>

@@ -47,9 +47,8 @@ export function FeedComponent ({ feed }: Props) {
         minute: "2-digit"
     });
 
-    // TODO: implementar função para validar se é o mesmo usuário logado
     let menu = [];
-    let isFeedOwner = true;
+    let isFeedOwner = feed.createdBy == loginService.getNick();
     if (isFeedOwner) {
         menu = [
             {

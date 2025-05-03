@@ -32,6 +32,14 @@ export class ApiService {
         });
     }
 
+    async getAuthInfo(userToken: UserToken) {
+        return await this.request.get(`/auth/info`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async cadastrarUsuario(nome: string, usuario: string, dt_nascimento: string, email: string, bio: string, senha: string) {
         return await this.request.post("/users/", {
             "nome": nome,
