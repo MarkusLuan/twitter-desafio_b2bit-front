@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-import { UserToken } from "../models/UserToken";
+import { UserToken, Paginacao } from "../models";
 
 export class ApiService {
     private BASIC_AUTH;
@@ -63,8 +63,8 @@ export class ApiService {
         });
     }
 
-    async getFeed(userToken: UserToken) {
-        return await this.request.get("/feed/", {
+    async getFeed(userToken: UserToken, paginacao: Paginacao) {
+        return await this.request.get(`/feed/?${paginacao.queryParams}`, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }
@@ -79,22 +79,35 @@ export class ApiService {
         });
     }
 
-    async postarFeed(userToken: UserToken, feedTexto: string) {
-        return await this.request.post("/feed/", {
-            "texto": feedTexto,
-        }, {
+    async getFeedImg(userToken: UserToken, uuidFeed: string) {
+        const res = this.request.get(`/feed/${uuidFeed}/img`, {
             headers: {
-                Authorization: `Bearer ${userToken.token}`
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "image/png"
+            }
+        });
+
+        const imgSrc = res.then(res => fetch (res.data))
+            .then(res => res.blob())
+            .then(blob => URL.createObjectURL(blob));
+
+        return await imgSrc;
+    }
+
+    async postarFeed(userToken: UserToken, formData: FormData) {
+        return await this.request.post("/feed/", formData, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "multipart/form-data",
             }
         });
     }
 
-    async editarFeed(userToken: UserToken, uuidFeed: string, feedTexto: string) {
-        return await this.request.put(`/feed/${uuidFeed}`, {
-            "texto": feedTexto,
-        }, {
+    async editarFeed(userToken: UserToken, uuidFeed: string, formData: FormData) {
+        return await this.request.put(`/feed/${uuidFeed}`, formData, {
             headers: {
-                Authorization: `Bearer ${userToken.token}`
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "multipart/form-data",
             }
         });
     }

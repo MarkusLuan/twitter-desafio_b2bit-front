@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Feed } from "../models/Feed";
 import { ApiService, LoginService } from "../services";
 import { UserComponent } from "./UserComponent";
 import { OpcoesComponent } from "./OpcoesComponent";
+import { ImageSkeletonComponent } from "./ImageSkeletonComponent";
 
 import iconOpcoes from "../assets/iconOpcoes.png";
 import "./FeedComponent.css";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
     feed: Feed
@@ -17,6 +18,7 @@ export function FeedComponent ({ feed }: Props) {
     const [ countLikes, setCountLikes ] = useState(feed.countLikes);
     const [ isLiked, setIsLiked ] = useState(feed.isLiked);
     const [ isDeletado, setIsDeletado ] = useState(false);
+    const [ imgSrc, setImgSrc ] = useState<string | null>(null);
     
     const apiService = new ApiService();
     const loginService = new LoginService();
@@ -84,6 +86,13 @@ export function FeedComponent ({ feed }: Props) {
         ]
     }
 
+    useEffect(() => {
+        if (feed.hasImage) {
+            const res = apiService.getFeedImg(loginService.userToken!, feed.uuid);
+            res.then(url => setImgSrc(url));
+        }
+    }, []);
+
     return (
         <>
             { !isDeletado &&
@@ -94,7 +103,10 @@ export function FeedComponent ({ feed }: Props) {
                             <OpcoesComponent icon={iconOpcoes} menu={menu} />
                         </div>
                         <div className="feed-imagem">
-                            <img src={feed.imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
+                            { feed.hasImage &&
+                                !imgSrc && <ImageSkeletonComponent />
+                                || imgSrc && <img src={ imgSrc } alt="Postagem" />
+                            }
                         </div>
                         <div className="feed-acoes">
                             <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>

@@ -7,9 +7,10 @@ import { ErroComponent, LoadingComponent } from "../componentes";
 export function CreatePost() {
     const { uuid_feed } = useParams<{ uuid_feed: string }>();
     const isEditando = uuid_feed != undefined;
-
+    
     const [ feedTexto, setFeedTexto ] = useState('');
     
+    const [ imgFile, setImgFile ] = useState<File | null>(null);
     const [ erro, setErro ] = useState('');
     const [ isCarregando, setIsCarregando ] = useState(false);
     const [ isPodePostar, setIsPodePostar ] = useState(false);
@@ -23,8 +24,12 @@ export function CreatePost() {
 
         setIsCarregando(true);
 
+        const formData = new FormData();
+        if (imgFile) formData.append("img", imgFile!);
+        formData.append("texto", feedTexto);
+
         if (isEditando) {
-            let res = apiService.editarFeed(loginService.userToken!, uuid_feed, feedTexto);
+            let res = apiService.editarFeed(loginService.userToken!, uuid_feed, formData);
             res.then(r => {
                 navigate("/");
             }).catch(r => {
@@ -33,7 +38,7 @@ export function CreatePost() {
                 setIsCarregando(false);
             });
         } else {
-            let res = apiService.postarFeed(loginService.userToken!, feedTexto);
+            let res = apiService.postarFeed(loginService.userToken!, formData);
             res.then(r => {
                 navigate("/");
             }).catch(r => {
@@ -42,6 +47,11 @@ export function CreatePost() {
                 setIsCarregando(false);
             });
         }
+    };
+
+    const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files[0]) setImgFile(files[0]);
     };
 
     useEffect(() => {
@@ -70,6 +80,12 @@ export function CreatePost() {
                 rows={5}
                 value={feedTexto}
                 onChange={ (e) => setFeedTexto(e.target.value) } />
+
+            <input
+                className="form-control mt-3"
+                type="file"
+                accept='image/*'
+                onChange={ onImgChange } />
             
             <button
                 type="button"
