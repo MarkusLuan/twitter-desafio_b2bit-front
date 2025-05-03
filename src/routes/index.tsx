@@ -1,10 +1,14 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { JSX } from "react";
 
-import { LoginService } from "./services/LoginService";
+import { LoginService } from "../services/LoginService";
 
-import { Login } from './pages/Login';
-import { CadastroUsuario } from './pages/CadastroUsuario';
+import { CreatePost } from '../pages/CreatePost';
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
+import { CadastroUsuario } from '../pages/CadastroUsuario';
+
+import { FeedRoute } from "./FeedRoute";
 
 const login_service = new LoginService();
 
@@ -18,9 +22,17 @@ export function AppRoutes () {
             <Routes>
                 <Route path="/" element={
                     <PrivateRoute >
-                        <div>Tteste de login</div>
+                        <Home />
                     </PrivateRoute>
                 } />
+
+                <Route path="/feed" element={
+                    <PrivateRoute >
+                        <Outlet />
+                    </PrivateRoute>
+                } >{ FeedRoute }</Route>
+
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastrar" element={<CadastroUsuario />} />
             </Routes>

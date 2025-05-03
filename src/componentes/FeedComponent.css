@@ -1,0 +1,59 @@
+.feed {
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+  
+.feed-header {
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    background: #2800659f;
+    color: #FFF;
+}
+
+.feed-header .component-opcoes {
+    margin: auto;
+    margin-right: 5px;
+}
+  
+.feed-imagem img {
+    width: 100%;
+    display: block;
+}
+
+.feed-acoes {
+    display: flex;
+    gap: 5px;
+    padding: 8px 10px;
+    font-size: 1.2rem;
+}
+
+.feed-acoes > span {
+    cursor: pointer;
+}
+  
+.feed-info {
+    padding: 0 10px 10px;
+}
+
+.feed-info .feed-datetime {
+    display: grid;
+    margin: auto;
+    margin-right: 10px;
+    text-align: right;
+    font-style: italic;
+    font-size: 9pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.feed-info .feed-description {
+    text-align: justify;
+    margin-top: 10px;
+    margin-left: 30px;
+    overflow-wrap: break-word;
+    white-space: pre-line; 
+}

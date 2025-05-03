@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
+import { UserToken } from "../models/UserToken";
+
 export class ApiService {
     private BASIC_AUTH;
     private request: AxiosInstance;
@@ -43,5 +45,69 @@ export class ApiService {
                 Authorization: `Basic ${this.BASIC_AUTH}`
             }
         });
+    }
+
+    async getFeed(userToken: UserToken) {
+        return await this.request.get("/feed/", {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async getFeedInfo(userToken: UserToken, uuid_feed: string) {
+        return await this.request.get(`/feed/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async postarFeed(userToken: UserToken, feedTexto: string) {
+        return await this.request.post("/feed/", {
+            "texto": feedTexto,
+        }, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async editarFeed(userToken: UserToken, uuid_feed: string, feedTexto: string) {
+        return await this.request.put(`/feed/${uuid_feed}`, {
+            "texto": feedTexto,
+        }, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async deletarFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.delete(`/feed/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async curtirFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.post(`/likes/${uuid_feed}`, {}, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async descurtirFeed(userToken: UserToken, uuid_feed: string) {
+        return await this.request.delete(`/likes/${uuid_feed}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
+    async unfollow(arg0: UserToken, createdBy: string) {
+        throw new Error("Method not implemented.");
     }
 };

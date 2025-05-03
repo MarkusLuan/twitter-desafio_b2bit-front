@@ -1,0 +1,19 @@
+.user-info {
+    cursor: pointer;
+}
+
+.user-info img {
+    background: #381e4c;
+    border: 2px solid #004ebc;
+    border-radius: 20px;
+    margin-right: 10px;
+    padding: 7px;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.user-info-nick {
+    font-style: italic;
+    font-weight: bold;
+}

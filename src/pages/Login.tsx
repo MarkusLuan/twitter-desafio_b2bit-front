@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { ApiService } from "../services/ApiService";
 import { LoginService  } from "../services/LoginService";
-import { UserToken  } from "../models/UserToken";
-import '../App.css'
+
+import { UserToken  } from "../models";
+import { ErroComponent, LoadingComponent } from "../componentes";
 
 export function Login() {
   const [usuario, setUsuario] = useState('');
@@ -86,13 +87,10 @@ export function Login() {
                 Cadastrar
             </button>
 
-            { isCarregando &&
-                <div className="spinner-border text-primary mt-auto mb-auto" role="status">
-                    <span className="visually-hidden">Carregando...</span>
-                </div>
-            }
+            <LoadingComponent isCarregando={isCarregando} className='mt-auto mb-auto' />
         </div>
-        {erro && <p className="mt-4 text-danger">{erro}</p>}
+        
+        <ErroComponent erro={erro} />
     </form>
   );
 }
