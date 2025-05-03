@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-import { UserToken } from "../models/UserToken";
+import { UserToken, Paginacao } from "../models";
 
 export class ApiService {
     private BASIC_AUTH;
@@ -63,8 +63,8 @@ export class ApiService {
         });
     }
 
-    async getFeed(userToken: UserToken) {
-        return await this.request.get("/feed/", {
+    async getFeed(userToken: UserToken, paginacao: Paginacao) {
+        return await this.request.get(`/feed/?${paginacao.queryParams}`, {
             headers: {
                 Authorization: `Bearer ${userToken.token}`
             }

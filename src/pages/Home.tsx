@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
-import { Feed } from "../models";
+import { Feed, Paginacao } from "../models";
 import { ApiService, LoginService } from "../services";
 import { FeedComponent, LoadingComponent, UserComponent, OpcoesComponent, SearchComponent } from "../componentes";
 
@@ -12,6 +12,11 @@ import "./Home.css";
 export function Home() {
     const [ feeds, setFeed ] = useState<Feed[]>([]);
     const [ isCarregando, setIsCarregando ] = useState(false);
+
+    const isLoadedOnce = useRef(false);
+    const paginacao = new Paginacao({
+        maxResults: 5
+    });
     
     const navigate = useNavigate();
     const apiService = new ApiService();
@@ -24,11 +29,17 @@ export function Home() {
     const updateFeed = () => {
         setIsCarregando(true);
 
-        const res = apiService.getFeed(loginService.userToken!);
+        console.log("teste 1");
 
+        const res = apiService.getFeed(loginService.userToken!, paginacao);
         res.then(r => {
+            const newFeeds: Feed[] = [];
             const res = r.data;
-            const feeds = [];
+
+            console.log("teste 2");
+
+            let tsMax = 0;
+            let tsMin = new Date().getTime();
             for (let r of res) {
                 const feed = new Feed(
                     r["uuid"],
@@ -40,18 +51,40 @@ export function Home() {
                     r["has_image"]
                 );
 
-                feeds.push(feed);
+                // Atualiza paginação
+                const feedTs = parseInt((feed.dtCriacao.getTime() / 1000).toString())+1;
+                tsMax = Math.max(tsMax, feedTs);
+                tsMin = Math.min(tsMin, feedTs);
+
+                newFeeds.push(feed);
             }
-            
-            setFeed(feeds);
+
+            paginacao.tsAfter = Math.max(paginacao.tsAfter, tsMax);
+            paginacao.tsBefore = 0;
+
+            console.table(paginacao);
+
+            setFeed(prevFeeds => [...prevFeeds, ...newFeeds].sort((a, b) => {
+                if (a.dtCriacao >= b.dtCriacao) return -1;
+                return 1;
+            }));
         }).catch(r => {
+            console.log(r)
         }).finally(() => {
             setIsCarregando(false);
         });
     };
 
     useEffect(() => {
+        if (isLoadedOnce.current) return;
+        isLoadedOnce.current = true;
+
+        // Atualiza o feed a cada 10 segundos
+        // Não consegui fazer com que ele fosse atualizado dinamicamente ao rolar a pagina
+        // odeio React kkkk
+
         updateFeed();
+        setInterval(() => updateFeed(), 10 * 1000);
     }, []);
 
     useEffect(() => {
@@ -88,7 +121,7 @@ export function Home() {
                 </div>
             </div>
 
-            <div id="feedlist_container">
+            <div id="feedlist_container" >
                 {feeds.map((feed, idx) => (
                     <FeedComponent key={idx} feed={feed} />
                 ))}
