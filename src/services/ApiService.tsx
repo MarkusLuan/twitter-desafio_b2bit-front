@@ -79,22 +79,20 @@ export class ApiService {
         });
     }
 
-    async postarFeed(userToken: UserToken, feedTexto: string) {
-        return await this.request.post("/feed/", {
-            "texto": feedTexto,
-        }, {
+    async postarFeed(userToken: UserToken, formData: FormData) {
+        return await this.request.post("/feed/", formData, {
             headers: {
-                Authorization: `Bearer ${userToken.token}`
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "multipart/form-data",
             }
         });
     }
 
-    async editarFeed(userToken: UserToken, uuidFeed: string, feedTexto: string) {
-        return await this.request.put(`/feed/${uuidFeed}`, {
-            "texto": feedTexto,
-        }, {
+    async editarFeed(userToken: UserToken, uuidFeed: string, formData: FormData) {
+        return await this.request.put(`/feed/${uuidFeed}`, formData, {
             headers: {
-                Authorization: `Bearer ${userToken.token}`
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "multipart/form-data",
             }
         });
     }
