@@ -9,7 +9,7 @@ export class LoginService {
     }
     
     public get isLogado () {
-        return !!localStorage.getItem("token") || (this.userToken != null && this.userToken!.isExpirado());
+        return localStorage.getItem("nick") && localStorage.getItem("token") && (this.userToken != null && this.userToken!.isExpirado());
     }
     
     public get userToken() : UserToken|null {
@@ -36,5 +36,15 @@ export class LoginService {
         ).toString();
 
         localStorage.setItem("token", criptoToken);
+    }
+
+    public salvarNick(nick: string) {
+        localStorage.setItem("nick", btoa(nick));
+    }
+
+    public getNick() {
+        const nick = localStorage.getItem("nick");
+        if (nick) return atob(nick);
+        return null;
     }
 }

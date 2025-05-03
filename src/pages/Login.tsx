@@ -24,14 +24,20 @@ export function Login() {
     res.then(r => {
         const j = r.data;
 
-        loginService.salvarToken(new UserToken(
+        const userToken = new UserToken(
             j["access_token"],
             j["refresh_token"],
             j["created_at"],
             j["expires_in"],
-        ));
+        );
 
-        navigate("/");
+        const res = api.getAuthInfo(userToken);
+        res.then(r => {
+            loginService.salvarNick(r.data["nick"]);
+            loginService.salvarToken(userToken);
+
+            navigate("/");
+        });
     }).catch(r => {
         setErro(r.response.data.texto);
     }).finally(() => {

@@ -47,9 +47,8 @@ export function FeedComponent ({ feed }: Props) {
         minute: "2-digit"
     });
 
-    // TODO: implementar função para validar se é o mesmo usuário logado
     let menu = [];
-    let isFeedOwner = true;
+    let isFeedOwner = feed.createdBy == loginService.getNick();
     if (isFeedOwner) {
         menu = [
             {
@@ -69,6 +68,13 @@ export function FeedComponent ({ feed }: Props) {
         ];
     } else {
         menu = [
+            {
+                // TODO: Remover após os testes
+                menu: "Seguir usuário",
+                onClick: () => {
+                    apiService.follow(loginService.userToken!, feed.createdBy);
+                }
+            },
             {
                 menu: "Deixar de Seguir",
                 onClick: () => {
