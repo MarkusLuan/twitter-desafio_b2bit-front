@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { Feed } from "../models";
 import { ApiService, LoginService } from "../services";
-import { FeedComponent, LoadingComponent } from "../componentes";
+import { FeedComponent, LoadingComponent, UserComponent, OpcoesComponent } from "../componentes";
+
+import iconAdd from "../assets/iconAdd.png";
+import iconOpcoesSeta from "../assets/iconOpcoesSeta.png";
+import "./Home.css";
 
 export function Home() {
     const [ feeds, setFeed ] = useState<Feed[]>([]);
@@ -58,18 +62,38 @@ export function Home() {
         };
       }, []);
 
+    const menu = [{
+        menu: "Sair",
+        onClick: () => {
+            loginService.encerrarSessao();
+            navigate("/login");
+        }
+    }]
+
     return (
-        <div >
-            {feeds.map((feed, idx) => (
-                <FeedComponent key={idx} feed={feed} />
-            ))}
+        <div id="feedlist">
+            <div id="feedlist_header">
+                <img id='bt_postarFeed' 
+                    alt='Postar'
+                    title='Postar'
+                    src={iconAdd}
+                    onClick={(e) => postar()} />
+                
+                <input id="inpt_search" className='form-control' placeholder='Pesquisar' type="text" />
 
-            <LoadingComponent isCarregando={isCarregando} />
+                <div className='d-flex'>
+                    <UserComponent nick={loginService.getNick() || ''} />
+                    <OpcoesComponent icon={iconOpcoesSeta} menu={menu} />
+                </div>
+            </div>
 
-            <button
-                type='button'
-                onClick={(e) => postar()}
-            >Postar</button>
+            <div id="feedlist_container">
+                {feeds.map((feed, idx) => (
+                    <FeedComponent key={idx} feed={feed} />
+                ))}
+            </div>
+
+            <LoadingComponent id='feedlist_loading' isCarregando={isCarregando} />
         </div>
     );
 }

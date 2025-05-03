@@ -18,7 +18,7 @@ O projeto se trata de uma API RESTFUL para um sistema de midia social, onde os u
 - [x] Visualizar o Feed
 - [x] Mostrar apenas postagens dos usuários seguidos
 - [ ] Habilitar Caixa de pesquisa
-- [ ] Fazer logoff
+- [x] Fazer logoff
 
 ### Backend
 * Feito com Python 3.13

@@ -8,7 +8,7 @@ interface Props {
 
 export function UserComponent ({ nick } : Props) {
     return (
-        <div className="user-info" style={{textAlign: "left"}}>
+        <div className="user-info" >
             <img src={reactLogo} />
             <span className="user-info-nick">{ nick }</span>
         </div>

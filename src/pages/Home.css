@@ -1,0 +1,53 @@
+#feedlist {
+    height: 100vh;
+   overflow: hidden;
+}
+
+#feedlist_header {
+    display: flex;
+    width: 100vw;
+    background: #532e8c;
+    padding: 15px;
+    z-index: 5;
+}
+
+#feedlist_header > * {
+    margin: auto;
+    color: #FFF;
+}
+
+#feedlist_header > *:first-child {
+    margin-left: 10px !important;
+}
+
+#feedlist_header > *:last-child {
+    margin-right: 10px !important;
+}
+
+#bt_postarFeed {
+    cursor: pointer;
+    background: #000;
+    padding: 10px;
+    border-radius: 10px;
+    width: 55px;
+    height: 55px;
+}
+
+#inpt_search {
+    width: 50%;
+    color: #000000;
+}
+
+#feedlist_container {
+    height: 93vh;
+    overflow-y: auto;
+}
+
+#feedlist_loading {
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 20pt;
+}
