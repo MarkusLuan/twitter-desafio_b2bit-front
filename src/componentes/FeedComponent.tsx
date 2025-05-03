@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Feed } from "../models/Feed";
 import { ApiService, LoginService } from "../services";
 import { UserComponent } from "./UserComponent";
 import { OpcoesComponent } from "./OpcoesComponent";
+import { ImageSkeletonComponent } from "./ImageSkeletonComponent";
 
 import iconOpcoes from "../assets/iconOpcoes.png";
 import "./FeedComponent.css";
-import { useNavigate } from "react-router-dom";
-import { UserToken } from "../models";
 
 interface Props {
     feed: Feed
@@ -103,7 +103,10 @@ export function FeedComponent ({ feed }: Props) {
                             <OpcoesComponent icon={iconOpcoes} menu={menu} />
                         </div>
                         <div className="feed-imagem">
-                            <img src={imgSrc || 'https://mkgcriacoes.com.br/imgs/logo_mkgcriacoes.png'} alt="Postagem" />
+                            { feed.hasImage &&
+                                !imgSrc && <ImageSkeletonComponent />
+                                || imgSrc && <img src={ imgSrc } alt="Postagem" />
+                            }
                         </div>
                         <div className="feed-acoes">
                             <span onClick={toggleCurtirFeed}>{ isLiked ? '❤️' : '🩶'}</span>
