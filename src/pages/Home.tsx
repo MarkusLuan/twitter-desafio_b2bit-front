@@ -36,7 +36,8 @@ export function Home() {
                     r["created_by"],
                     r["texto"],
                     r["count_likes"],
-                    r["is_liked"]
+                    r["is_liked"],
+                    r["has_image"]
                 );
 
                 feeds.push(feed);

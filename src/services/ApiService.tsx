@@ -79,6 +79,21 @@ export class ApiService {
         });
     }
 
+    async getFeedImg(userToken: UserToken, uuidFeed: string) {
+        const res = this.request.get(`/feed/${uuidFeed}/img`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`,
+                "Content-Type": "image/png"
+            }
+        });
+
+        const imgSrc = res.then(res => fetch (res.data))
+            .then(res => res.blob())
+            .then(blob => URL.createObjectURL(blob));
+
+        return await imgSrc;
+    }
+
     async postarFeed(userToken: UserToken, formData: FormData) {
         return await this.request.post("/feed/", formData, {
             headers: {
