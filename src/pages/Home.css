@@ -33,11 +33,6 @@
     height: 55px;
 }
 
-#inpt_search {
-    width: 50%;
-    color: #000000;
-}
-
 #feedlist_container {
     height: 93vh;
     overflow-y: auto;

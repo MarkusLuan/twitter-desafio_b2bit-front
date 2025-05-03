@@ -1,0 +1,26 @@
+.component-search {
+    width: 50% !important;
+    color: #000000 !important;
+}
+
+.component-search-results {
+    display: grid;
+    position: absolute;
+    margin-top: 20px !important;
+    border-radius: 15px;
+    background: #3f0ab09c;   
+    text-align: justify;
+}
+
+.component-search-results * {
+    padding: 15px;
+    margin: 5px;
+    border-radius: 15px;
+    color: #ffffff !important;
+    background: #3502a4;
+    cursor: pointer;
+}
+
+.component-search-results *:hover {
+    background: #2a0f64;
+}

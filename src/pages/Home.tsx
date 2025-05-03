@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Feed } from "../models";
 import { ApiService, LoginService } from "../services";
-import { FeedComponent, LoadingComponent, UserComponent, OpcoesComponent } from "../componentes";
+import { FeedComponent, LoadingComponent, UserComponent, OpcoesComponent, SearchComponent } from "../componentes";
 
 import iconAdd from "../assets/iconAdd.png";
 import iconOpcoesSeta from "../assets/iconOpcoesSeta.png";
@@ -79,7 +79,7 @@ export function Home() {
                     src={iconAdd}
                     onClick={(e) => postar()} />
                 
-                <input id="inpt_search" className='form-control' placeholder='Pesquisar' type="text" />
+                <SearchComponent />
 
                 <div className='d-flex'>
                     <UserComponent nick={loginService.getNick() || ''} />
