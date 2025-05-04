@@ -9,6 +9,7 @@ export function UserInfo() {
   const { nick_user } = useParams<{ nick_user: string }>();
   const [ countSeguidores, setCountSeguidores ] = useState(0);
   const [ countSeguindo, setCountSeguindo ] = useState(0);
+  const [ isSeguindo, setIsSeguindo ] = useState(false);
 
   const api = new ApiService();
   const loginService = new LoginService();
@@ -29,13 +30,15 @@ export function UserInfo() {
     const res = api.follow(loginService.userToken!, nick_user!);
     res.then(() => {
         setCountSeguidores(countSeguidores+1);
+        setIsSeguindo(true);
     });
   };
 
   const unfollowUser = () => {
     const res = api.unfollow(loginService.userToken!, nick_user!);
     res.then(() => {
-        setCountSeguidores(countSeguidores+1);
+        setCountSeguidores(countSeguidores-1);
+        setIsSeguindo(false);
     });
   };
 
@@ -49,13 +52,16 @@ export function UserInfo() {
         <span>{countSeguidores} Seguidores</span>
         <span>{countSeguindo} Seguindo</span>
         
-        <button 
-            type='button'
-            className='mt-2'
-            onClick={() => {
-                followUser()
-            }}
-        >Seguir</button>
+        {loginService.getNick() != nick_user &&
+          <button 
+              type='button'
+              className='mt-2'
+              onClick={() => {
+                  if (isSeguindo) unfollowUser();
+                  else followUser()
+              }}
+          >{isSeguindo? 'Deixar de Seguir': 'Seguir'}</button>
+        }
 
         <button 
             type='button'
