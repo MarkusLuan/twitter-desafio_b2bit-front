@@ -20,7 +20,7 @@ export function Login() {
     e.preventDefault();
     setIsCarregando(true);
 
-    let res = api.autenticar(usuario, senha);
+    let res = api.autenticar(usuario, btoa(senha));
     res.then(r => {
         const j = r.data;
 

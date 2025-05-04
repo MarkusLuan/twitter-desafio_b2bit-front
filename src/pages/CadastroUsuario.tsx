@@ -21,7 +21,7 @@ export function CadastroUsuario() {
     e.preventDefault();
     setIsCarregando(true);
 
-    let res = api.cadastrarUsuario(nome, usuario, dtNascimento, email, bio, senha);
+    let res = api.cadastrarUsuario(nome, usuario, dtNascimento, email, bio, btoa(senha));
     res.then(r => {
         navigate("/login");
     }).catch(r => {
