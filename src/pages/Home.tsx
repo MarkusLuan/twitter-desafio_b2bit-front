@@ -69,7 +69,11 @@ export function Home() {
                 return 1;
             }));
         }).catch(r => {
-            console.log(r)
+            if (r.status == 401) {
+                navigate("/login");
+                return;
+            }
+            console.error(r);
         }).finally(() => {
             setIsCarregando(false);
         });
