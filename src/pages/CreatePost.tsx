@@ -30,18 +30,18 @@ export function CreatePost() {
 
         if (isEditando) {
             let res = apiService.editarFeed(loginService.userToken!, uuid_feed, formData);
-            res.then(r => {
+            res.then(() => {
                 navigate("/");
-            }).catch(r => {
+            }).catch(() => {
                 setErro("Erro: Não foi possivel realizar a postagem!");
             }).finally(() => {
                 setIsCarregando(false);
             });
         } else {
             let res = apiService.postarFeed(loginService.userToken!, formData);
-            res.then(r => {
+            res.then(() => {
                 navigate("/");
-            }).catch(r => {
+            }).catch(() => {
                 setErro("Erro: Não foi possivel realizar a postagem!");
             }).finally(() => {
                 setIsCarregando(false);
@@ -60,7 +60,7 @@ export function CreatePost() {
             res.then(r => {
                 setFeedTexto(r.data.texto);
                 setIsPodePostar(true);
-            }).catch(r => {
+            }).catch(() => {
                 setErro("Não é possível editar!\nAtualize a pagine e tente novamente!")
             });
         } else setIsPodePostar(true);

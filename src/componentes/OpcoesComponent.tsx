@@ -12,7 +12,7 @@ export function OpcoesComponent ( { icon, menu }: Props) {
     const [ isExibindoMenu, setIsExibindoMenu ] = useState(false);
     const [ position, setPosition ] = useState( {top: 0, left: 0} );
 
-    const updatePosition = (e) => {
+    const updatePosition = (e: any) => {
         const rect = e.target.getBoundingClientRect();
         setPosition({
             top: rect.bottom,
@@ -20,7 +20,7 @@ export function OpcoesComponent ( { icon, menu }: Props) {
         });
     };
 
-    const onMenuClick = (e) => {
+    const onMenuClick = (e: any) => {
         updatePosition(e);
         setIsExibindoMenu(!isExibindoMenu);
     };

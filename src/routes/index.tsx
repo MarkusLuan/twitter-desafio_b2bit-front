@@ -3,10 +3,10 @@ import { JSX } from "react";
 
 import { LoginService } from "../services/LoginService";
 
-import { CreatePost } from '../pages/CreatePost';
 import { Home } from '../pages/Home';
 import { Login } from '../pages/Login';
 import { CadastroUsuario } from '../pages/CadastroUsuario';
+import { UserInfo } from '../pages/UserInfo';
 
 import { FeedRoute } from "./FeedRoute";
 
@@ -23,6 +23,12 @@ export function AppRoutes () {
                 <Route path="/" element={
                     <PrivateRoute >
                         <Home />
+                    </PrivateRoute>
+                } />
+
+                <Route path="/users/:nick_user" element={
+                    <PrivateRoute >
+                        <UserInfo />
                     </PrivateRoute>
                 } />
 

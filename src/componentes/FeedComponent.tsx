@@ -32,14 +32,14 @@ export function FeedComponent ({ feed }: Props) {
 
         if (isLiked) {
             const res = apiService.descurtirFeed(loginService.userToken!, feed.uuid);
-            res.then(r => updateCurtidas(false))
+            res.then(() => updateCurtidas(false))
                .catch(r => {
                     if (r.status == 404) updateCurtidas(false);
                 }
             );
         } else {
             const res = apiService.curtirFeed(loginService.userToken!, feed.uuid);
-            res.then(r => updateCurtidas(true));
+            res.then(() => updateCurtidas(true));
         }
     }
 
@@ -64,19 +64,12 @@ export function FeedComponent ({ feed }: Props) {
                 onClick: () => {
                     // TODO: Mostrar popup para confirmar
                     const res = apiService.deletarFeed(loginService.userToken!, feed.uuid);
-                    res.then(r => { setIsDeletado(true) });
+                    res.then(() => { setIsDeletado(true) });
                 }
             }
         ];
     } else {
         menu = [
-            {
-                // TODO: Remover após os testes
-                menu: "Seguir usuário",
-                onClick: () => {
-                    apiService.follow(loginService.userToken!, feed.createdBy);
-                }
-            },
             {
                 menu: "Deixar de Seguir",
                 onClick: () => {

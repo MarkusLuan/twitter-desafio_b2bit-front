@@ -17,13 +17,13 @@ export function SearchComponent () {
     const [ position, setPosition ] = useState( {top: 0, left: 0, width: 0} );
     const [ isShowResults, setIsShowResults ] = useState(false);
     
-    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    const debounceRef = useRef<number | null>(null);
 
     const navigate = useNavigate();
     const apiService = new ApiService();
     const loginService = new LoginService();
 
-    const updatePosition = (e) => {
+    const updatePosition = (e: any) => {
         const rect = e.target.getBoundingClientRect();
         setPosition({
             top: rect.bottom,
@@ -32,7 +32,7 @@ export function SearchComponent () {
         });
     };
 
-    const pesquisar = (search) => {
+    const pesquisar = (search: string) => {
         const res = apiService.searchUser(loginService.userToken!, search);
         res.then(r => {
             const res = r.data;
@@ -67,7 +67,7 @@ export function SearchComponent () {
         }, 500);
     }
 
-    const onSearchKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onSearchKeyDown = (e: any) => {
         if (e.keyCode == 27) {
             if (debounceRef.current) {
                 clearTimeout(debounceRef.current);

@@ -14,6 +14,7 @@ export function Home() {
     const [ isCarregando, setIsCarregando ] = useState(false);
 
     const isLoadedOnce = useRef(false);
+    const debounceRef = useRef<number | null>(null);
     const paginacao = new Paginacao({
         maxResults: 5
     });
@@ -29,14 +30,10 @@ export function Home() {
     const updateFeed = () => {
         setIsCarregando(true);
 
-        console.log("teste 1");
-
         const res = apiService.getFeed(loginService.userToken!, paginacao);
         res.then(r => {
             const newFeeds: Feed[] = [];
             const res = r.data;
-
-            console.log("teste 2");
 
             let tsMax = 0;
             let tsMin = new Date().getTime();
@@ -62,8 +59,6 @@ export function Home() {
             paginacao.tsAfter = Math.max(paginacao.tsAfter, tsMax);
             paginacao.tsBefore = 0;
 
-            console.table(paginacao);
-
             setFeed(prevFeeds => [...prevFeeds, ...newFeeds].sort((a, b) => {
                 if (a.dtCriacao >= b.dtCriacao) return -1;
                 return 1;
@@ -76,6 +71,11 @@ export function Home() {
             console.error(r);
         }).finally(() => {
             setIsCarregando(false);
+
+            // Atualiza o feed a cada 10 segundos
+            // Não consegui fazer com que ele fosse atualizado dinamicamente ao rolar a pagina
+            // odeio React kkkk
+            debounceRef.current = setTimeout(() => updateFeed(), 10 * 1000);
         });
     };
 
@@ -83,20 +83,19 @@ export function Home() {
         if (isLoadedOnce.current) return;
         isLoadedOnce.current = true;
 
-        // Atualiza o feed a cada 10 segundos
-        // Não consegui fazer com que ele fosse atualizado dinamicamente ao rolar a pagina
-        // odeio React kkkk
-
         updateFeed();
-        setInterval(() => updateFeed(), 10 * 1000);
     }, []);
 
     useEffect(() => {
         document.body.style.backgroundColor = "#3A3A3A";
     
         return () => {
-          // Limpa quando sair da página
-          document.body.style.backgroundColor = "";
+            // Limpa quando sair da página
+            document.body.style.backgroundColor = "";
+            
+            if (debounceRef.current) {
+                clearTimeout(debounceRef.current);
+            }
         };
       }, []);
 
@@ -115,7 +114,7 @@ export function Home() {
                     alt='Postar'
                     title='Postar'
                     src={iconAdd}
-                    onClick={(e) => postar()} />
+                    onClick={() => postar()} />
                 
                 <SearchComponent />
 
