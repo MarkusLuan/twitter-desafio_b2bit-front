@@ -115,7 +115,7 @@ export function Home() {
                     alt='Postar'
                     title='Postar'
                     src={iconAdd}
-                    onClick={(e) => postar()} />
+                    onClick={() => postar()} />
                 
                 <SearchComponent />
 

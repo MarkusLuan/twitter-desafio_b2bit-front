@@ -3,6 +3,7 @@ export class Paginacao {
     maxResults: number = 0;
     tsAfter: number = 0;
     tsBefore: number = 0;
+    [key: string]: any; 
 
     constructor (data?: {firstResult?: number, maxResults?: number, tsAfter?: number, tsBefore?: number}) {
         this.firstResult = data?.firstResult ?? 0;
@@ -12,7 +13,7 @@ export class Paginacao {
     }
 
     get queryParams () {
-        return Object.keys(this).map((k) => {
+        return Object.keys(this).map((k: string) => {
             const kLowerCase = k.replace(/([A-Z])/g, match => {
                 return `_${match.toLowerCase()}`
             });

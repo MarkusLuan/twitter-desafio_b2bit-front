@@ -22,7 +22,7 @@ export function CadastroUsuario() {
     setIsCarregando(true);
 
     let res = api.cadastrarUsuario(nome, usuario, dtNascimento, email, bio, btoa(senha));
-    res.then(r => {
+    res.then(() => {
         navigate("/login");
     }).catch(r => {
         setErro(r.response.data.texto);

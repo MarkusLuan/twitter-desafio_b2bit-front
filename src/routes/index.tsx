@@ -3,7 +3,6 @@ import { JSX } from "react";
 
 import { LoginService } from "../services/LoginService";
 
-import { CreatePost } from '../pages/CreatePost';
 import { Home } from '../pages/Home';
 import { Login } from '../pages/Login';
 import { CadastroUsuario } from '../pages/CadastroUsuario';
