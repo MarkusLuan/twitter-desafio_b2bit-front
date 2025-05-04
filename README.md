@@ -2,6 +2,16 @@
 
 * Como solicitado na vaga o front deverá ser feito em React.js. Embora não tenha conhecimento nesta linguagem irei tentar.
 * No caso, estou utilizando o React com o Vite
+* Não sabia de nada de react, aí comecei a estudar na quarta, mas consegui entregar tudo o que foi pedido
+
+### Imagens
+#### Mobile - Não consegui fazer responsivo
+<div style="display: flex;" >
+    <img src="https://github.com/user-attachments/assets/6f03115f-e5b1-4424-a448-85436ac2c2f1" height="500px" />
+    <img src="https://github.com/user-attachments/assets/06161251-0d14-4bd7-819f-9c0d76cb9e81" height="500px" />
+    <img src="https://github.com/user-attachments/assets/69a964d9-a923-4049-b422-c908ad5193b1" height="500px" />
+    <img src="https://github.com/user-attachments/assets/840c1c72-923f-49c6-8a02-58aebbe905c3" height="500px" />
+</div>
 
 ---
 
