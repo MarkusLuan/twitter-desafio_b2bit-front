@@ -63,6 +63,14 @@ export class ApiService {
         });
     }
 
+    async getUserInfo(userToken: UserToken, nickUser: string) {
+        return await this.request.get(`/users/${nickUser}`, {
+            headers: {
+                Authorization: `Bearer ${userToken.token}`
+            }
+        });
+    }
+
     async getFeed(userToken: UserToken, paginacao: Paginacao) {
         return await this.request.get(`/feed/?${paginacao.queryParams}`, {
             headers: {
